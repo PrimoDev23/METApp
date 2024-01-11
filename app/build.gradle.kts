@@ -75,4 +75,6 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.kotlinx.converter)
+
+    implementation(libs.koin)
 }
