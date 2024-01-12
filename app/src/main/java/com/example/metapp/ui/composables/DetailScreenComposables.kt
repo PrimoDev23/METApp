@@ -204,11 +204,13 @@ fun DetailScreenInformation(
                 text = isHighlightText
             )
 
-            DetailUrlItem(
-                modifier = Modifier.fillMaxWidth(),
-                title = stringResource(id = R.string.detail_screen_website),
-                url = data.objectUrl
-            )
+            if (data.objectUrl.isNotBlank()) {
+                DetailUrlItem(
+                    modifier = Modifier.fillMaxWidth(),
+                    title = stringResource(id = R.string.detail_screen_website),
+                    url = data.objectUrl
+                )
+            }
         }
     }
 }
