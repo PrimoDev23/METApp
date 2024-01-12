@@ -12,7 +12,7 @@ import org.junit.Before
 @OptIn(ExperimentalCoroutinesApi::class)
 abstract class BaseCoroutineTest {
 
-    protected val dispatcher = StandardTestDispatcher()
+    private val dispatcher = StandardTestDispatcher()
 
     @Before
     fun before() {

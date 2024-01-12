@@ -44,7 +44,7 @@ class DetailScreenTest : BaseAndroidComposeTest() {
     }
 
     private fun buildSavedStateHandle(id: Int) = SavedStateHandle().apply {
-        this["id"] = 0
+        this["id"] = id
     }
 
     @Test

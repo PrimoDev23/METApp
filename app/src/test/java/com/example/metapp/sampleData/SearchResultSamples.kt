@@ -5,11 +5,6 @@ import com.example.metapp.domain.models.SearchResult
 
 object SearchResultSamples {
 
-    val emptyResponse = SearchResponse(
-        total = 0,
-        objectIds = emptyList()
-    )
-
     val empty = SearchResult(ids = emptyList())
 
     val filledResponse = SearchResponse(
