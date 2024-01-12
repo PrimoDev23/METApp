@@ -75,6 +75,9 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.kotlinx.converter)
+    implementation(libs.kotlinx.serialization)
 
     implementation(libs.koin)
+
+    implementation(libs.compose.lifecycle)
 }
