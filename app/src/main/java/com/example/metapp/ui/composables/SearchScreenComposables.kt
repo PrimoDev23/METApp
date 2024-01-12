@@ -121,6 +121,12 @@ fun SearchScreen(
                         )
                     }
 
+                    SearchScreenContentType.ERROR -> {
+                        SearchScreenErrorState(
+                            modifier = innerModifier
+                        )
+                    }
+
                     SearchScreenContentType.EMPTY -> {
                         SearchScreenEmptyState(
                             modifier = innerModifier
@@ -137,6 +143,7 @@ fun SearchScreen(
                             }
                         )
                     }
+
                 }
             }
         }
@@ -198,6 +205,18 @@ fun SearchScreenEmptyState(
         contentAlignment = Alignment.Center
     ) {
         Text(text = stringResource(id = R.string.search_screen_empty_state))
+    }
+}
+
+@Composable
+fun SearchScreenErrorState(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = stringResource(id = R.string.search_screen_error_state))
     }
 }
 

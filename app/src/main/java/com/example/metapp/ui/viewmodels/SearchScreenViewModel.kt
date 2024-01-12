@@ -42,6 +42,16 @@ class SearchScreenViewModel(
             }
 
             val result = searchUseCase(term)
+                .getOrElse {
+                    _state.update {
+                        it.copy(
+                            searchResult = SearchResult(ids = emptyList()),
+                            contentType = SearchScreenContentType.ERROR
+                        )
+                    }
+
+                    return@launch
+                }
 
             _state.update {
                 it.copy(
@@ -67,6 +77,7 @@ data class SearchScreenState(
 
 enum class SearchScreenContentType {
     LOADING,
+    ERROR,
     EMPTY,
     RESULTS
 }

@@ -7,6 +7,6 @@ import retrofit2.http.Query
 interface SearchRemote {
 
     @GET("search")
-    suspend fun search(@Query("q") query: String): SearchResponse
+    suspend fun search(@Query("q") query: String): Result<SearchResponse>
 
 }

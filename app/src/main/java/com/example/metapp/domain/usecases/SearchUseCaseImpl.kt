@@ -7,7 +7,7 @@ import com.example.metapp.domain.usecases.interfaces.SearchUseCase
 class SearchUseCaseImpl(
     private val searchRepo: SearchRepository
 ): SearchUseCase {
-    override suspend fun invoke(term: String): SearchResult {
+    override suspend fun invoke(term: String): Result<SearchResult> {
         return searchRepo.search(term)
     }
 }
