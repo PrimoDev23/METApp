@@ -80,4 +80,6 @@ dependencies {
     implementation(libs.koin)
 
     implementation(libs.compose.lifecycle)
+
+    implementation(libs.compose.coil)
 }
