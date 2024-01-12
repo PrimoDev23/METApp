@@ -4,8 +4,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.lifecycle.SavedStateHandle
 import coil.Coil
 import coil.ImageLoader
@@ -18,7 +20,9 @@ import com.example.metapp.mocks.GetDetailByIdUseCaseErrorMock
 import com.example.metapp.mocks.GetDetailByIdUseCaseSuccessMock
 import com.example.metapp.ui.viewmodels.DetailScreenViewModel
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
 
@@ -148,6 +152,45 @@ class DetailScreenTest : BaseAndroidComposeTest() {
         }
 
         composeTestRule.onNodeWithText(context.getString(R.string.detail_screen_error_state))
+    }
+
+    @Test
+    fun backClicked() {
+        val id = 0
+        val navigator = mockk<DestinationsNavigator>()
+
+        every { navigator.popBackStack() } returns true
+
+        val data = DetailData(
+            primaryImage = TEST_URL,
+            additionalImages = listOf(
+                TEST_URL
+            ),
+            isHighlight = false,
+            title = "Mona Lisa",
+            department = "Art",
+            objectUrl = TEST_URL
+        )
+        val getDetailByIdUseCase = GetDetailByIdUseCaseSuccessMock(data)
+
+        val viewModel = DetailScreenViewModel(
+            savedStateHandle = buildSavedStateHandle(id),
+            getDetailByIdUseCase = getDetailByIdUseCase
+        )
+
+        composeTestRule.setContent {
+            DetailScreen(
+                navigator = navigator,
+                viewModel = viewModel
+            )
+        }
+
+        val backArrow =
+            composeTestRule.onNodeWithContentDescription(context.getString(R.string.general_navigate_back))
+        backArrow.assertExists()
+        backArrow.performClick()
+
+        verify { navigator.popBackStack() }
     }
 
     companion object {
