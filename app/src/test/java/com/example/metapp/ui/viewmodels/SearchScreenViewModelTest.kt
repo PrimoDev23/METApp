@@ -127,4 +127,30 @@ class SearchScreenViewModelTest : BaseCoroutineTest() {
         }
     }
 
+    @Test
+    fun `onSearchTermChanged - error`() = runTest {
+        val searchUseCase = mockk<SearchUseCase>()
+
+        coEvery { searchUseCase(any()) } returns Result.failure(Exception())
+
+        val viewModel = SearchScreenViewModel(
+            searchUseCase = searchUseCase
+        )
+
+        viewModel.state.test {
+            val term = "Test"
+            viewModel.onSearchTermChanged(term)
+
+            skipItems(2)
+
+            val state = awaitItem()
+
+            assertEquals(SearchScreenContentType.ERROR, state.contentType)
+            assertEquals(SearchResultSamples.empty, state.searchResult)
+            assertEquals(term, state.searchTerm)
+
+            coVerify { searchUseCase(term) }
+        }
+    }
+
 }

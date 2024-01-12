@@ -19,7 +19,7 @@ class DetailScreenViewModelTest : BaseCoroutineTest() {
     }
 
     @Test
-    fun init() = runTest {
+    fun `init - success`() = runTest {
         val id = 0
         val savedStateHandle = buildSavedStateHandle(id)
         val getDetailByIdUseCase = mockk<GetDetailByIdUseCase>()
@@ -41,6 +41,30 @@ class DetailScreenViewModelTest : BaseCoroutineTest() {
             state = awaitItem()
 
             assertEquals(detailData, state.data)
+
+            coVerify { getDetailByIdUseCase(id) }
+        }
+    }
+
+    @Test
+    fun `init - error`() = runTest {
+        val id = 0
+        val savedStateHandle = buildSavedStateHandle(id)
+        val getDetailByIdUseCase = mockk<GetDetailByIdUseCase>()
+
+        coEvery { getDetailByIdUseCase(id) } returns Result.failure(Exception())
+
+        val viewModel = DetailScreenViewModel(
+            savedStateHandle = savedStateHandle,
+            getDetailByIdUseCase = getDetailByIdUseCase
+        )
+
+        viewModel.state.test {
+            skipItems(1)
+            val state = awaitItem()
+
+            assertEquals(DetailScreenContentType.ERROR, state.contentType)
+            assertEquals(null, state.data)
 
             coVerify { getDetailByIdUseCase(id) }
         }
