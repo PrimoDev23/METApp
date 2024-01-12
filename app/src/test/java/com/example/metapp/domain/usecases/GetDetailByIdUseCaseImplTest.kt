@@ -18,7 +18,7 @@ class GetDetailByIdUseCaseImplTest : BaseCoroutineTest() {
 
         val id = 0
         val detailData = DetailDataSamples.detailData
-        coEvery { repo.getDetailById(id) } returns detailData
+        coEvery { repo.getDetailById(id) } returns Result.success(detailData)
 
         val useCase = GetDetailByIdUseCaseImpl(
             detailRepository = repo
@@ -26,7 +26,7 @@ class GetDetailByIdUseCaseImplTest : BaseCoroutineTest() {
 
         val result = useCase(id)
 
-        assertEquals(result, detailData)
+        assertEquals(Result.success(detailData), result)
 
         coVerify { repo.getDetailById(id) }
     }

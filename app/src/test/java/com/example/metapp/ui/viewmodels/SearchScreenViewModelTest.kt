@@ -39,7 +39,7 @@ class SearchScreenViewModelTest : BaseCoroutineTest() {
 
         val searchResult = SearchResultSamples.filled
 
-        coEvery { searchUseCase(any()) } returns searchResult
+        coEvery { searchUseCase(any()) } returns Result.success(searchResult)
 
         val viewModel = SearchScreenViewModel(
             searchUseCase = searchUseCase
@@ -71,7 +71,7 @@ class SearchScreenViewModelTest : BaseCoroutineTest() {
 
         val searchResult = SearchResultSamples.empty
 
-        coEvery { searchUseCase(any()) } returns searchResult
+        coEvery { searchUseCase(any()) } returns Result.success(searchResult)
 
         val viewModel = SearchScreenViewModel(
             searchUseCase = searchUseCase
@@ -103,7 +103,7 @@ class SearchScreenViewModelTest : BaseCoroutineTest() {
 
         val searchResult = SearchResultSamples.filled
 
-        coEvery { searchUseCase(any()) } returns searchResult
+        coEvery { searchUseCase(any()) } returns Result.success(searchResult)
 
         val viewModel = SearchScreenViewModel(
             searchUseCase = searchUseCase

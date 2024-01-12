@@ -19,7 +19,7 @@ class SearchRepositoryImplTest : BaseCoroutineTest() {
         val term = "Test"
         val searchResult = SearchResultSamples.filledResponse
 
-        coEvery { remote.search(term) } returns searchResult
+        coEvery { remote.search(term) } returns Result.success(searchResult)
 
         val repo = SearchRepositoryImpl(
             searchRemote = remote
@@ -27,7 +27,7 @@ class SearchRepositoryImplTest : BaseCoroutineTest() {
 
         val result = repo.search(term)
 
-        assertEquals(SearchResultSamples.filled, result)
+        assertEquals(Result.success(SearchResultSamples.filled), result)
 
         coVerify { remote.search(term) }
     }

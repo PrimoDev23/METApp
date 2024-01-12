@@ -19,7 +19,7 @@ class DetailRepositoryImplTest : BaseCoroutineTest() {
         val id = 0
         val detailResponse = DetailDataSamples.detailResponse
 
-        coEvery { remote.getDetailById(id) } returns detailResponse
+        coEvery { remote.getDetailById(id) } returns Result.success(detailResponse)
 
         val repo = DetailRepositoryImpl(
             detailRemote = remote
@@ -27,7 +27,7 @@ class DetailRepositoryImplTest : BaseCoroutineTest() {
 
         val result = repo.getDetailById(id)
 
-        assertEquals(DetailDataSamples.detailData, result)
+        assertEquals(Result.success(DetailDataSamples.detailData), result)
 
         coVerify { remote.getDetailById(id) }
     }

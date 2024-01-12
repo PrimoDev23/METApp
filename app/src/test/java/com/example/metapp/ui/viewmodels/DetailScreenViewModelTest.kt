@@ -26,7 +26,7 @@ class DetailScreenViewModelTest : BaseCoroutineTest() {
 
         val detailData = DetailDataSamples.detailData
 
-        coEvery { getDetailByIdUseCase(id) } returns detailData
+        coEvery { getDetailByIdUseCase(id) } returns Result.success(detailData)
 
         val viewModel = DetailScreenViewModel(
             savedStateHandle = savedStateHandle,

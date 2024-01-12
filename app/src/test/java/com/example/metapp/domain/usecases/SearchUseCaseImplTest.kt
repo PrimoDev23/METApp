@@ -18,7 +18,7 @@ class SearchUseCaseImplTest : BaseCoroutineTest() {
 
         val term = "Test"
         val searchResult = SearchResultSamples.filled
-        coEvery { repo.search(term) } returns searchResult
+        coEvery { repo.search(term) } returns Result.success(searchResult)
 
         val useCase = SearchUseCaseImpl(
             searchRepo = repo
@@ -26,7 +26,7 @@ class SearchUseCaseImplTest : BaseCoroutineTest() {
 
         val result = useCase(term)
 
-        assertEquals(result, searchResult)
+        assertEquals(Result.success(searchResult), result)
 
         coVerify { repo.search(term) }
     }
