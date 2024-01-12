@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">METApp</string>
+    <string name="search_screen_search_placeholder">Search…</string>
+    <string name="general_clear">Clear</string>
+    <string name="search_screen_empty_state">There are no items to show…</string>
+    <string name="general_jump_to_top">Jump to top</string>
 </resources>

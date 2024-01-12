@@ -1,6 +1,7 @@
 package com.example.metapp
 
 import android.app.Application
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 class Application: Application() {
@@ -9,7 +10,14 @@ class Application: Application() {
         super.onCreate()
 
         startKoin {
-            // TODO: Declare modules
+            androidContext(this@Application)
+
+            modules(
+                viewModelModule,
+                remoteModule,
+                repositoryModule,
+                useCaseModule
+            )
         }
     }
 
