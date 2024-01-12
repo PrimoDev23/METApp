@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.metapp.R
 import com.example.metapp.domain.models.SearchResult
+import com.example.metapp.ui.composables.destinations.DetailScreenDestination
 import com.example.metapp.ui.viewmodels.SearchScreenContentType
 import com.example.metapp.ui.viewmodels.SearchScreenViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -129,7 +131,10 @@ fun SearchScreen(
                         SearchScreenResults(
                             modifier = innerModifier,
                             result = state.searchResult,
-                            listState = listState
+                            listState = listState,
+                            onItemClicked = { id ->
+                                navigator.navigate(DetailScreenDestination(id = id))
+                            }
                         )
                     }
                 }
@@ -200,6 +205,7 @@ fun SearchScreenEmptyState(
 @Composable
 fun SearchScreenResults(
     result: SearchResult,
+    onItemClicked: (Int) -> Unit,
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState()
 ) {
@@ -218,7 +224,10 @@ fun SearchScreenResults(
                     .animateItemPlacement()
                     .padding(horizontal = 16.dp)
                     .minimumInteractiveComponentSize()
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .clickable {
+                        onItemClicked(id)
+                    },
                 id = id
             )
 
