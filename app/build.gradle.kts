@@ -82,4 +82,7 @@ dependencies {
     implementation(libs.compose.lifecycle)
 
     implementation(libs.compose.coil)
+
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
 }
