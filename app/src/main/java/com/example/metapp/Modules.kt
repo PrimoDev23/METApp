@@ -1,5 +1,6 @@
 package com.example.metapp
 
+import com.example.metapp.data.calladapter.ResultCallAdapterFactory
 import com.example.metapp.data.remotes.DetailRemote
 import com.example.metapp.data.remotes.SearchRemote
 import com.example.metapp.data.repositories.DetailRepositoryImpl
@@ -39,6 +40,7 @@ val remoteModule = module {
         Retrofit.Builder()
             .baseUrl("https://collectionapi.metmuseum.org/public/collection/v1/")
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .addCallAdapterFactory(ResultCallAdapterFactory())
             .build()
     }
     factory {
