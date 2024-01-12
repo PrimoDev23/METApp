@@ -14,4 +14,5 @@
     <string name="general_no">No</string>
     <string name="detail_screen_website">Website</string>
     <string name="search_screen_error_state">There was an error searching for elements</string>
+    <string name="detail_screen_error_state">There was an error loading the data...</string>
 </resources>

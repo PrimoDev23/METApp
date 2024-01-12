@@ -29,9 +29,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -51,6 +49,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.metapp.R
 import com.example.metapp.domain.models.DetailData
 import com.example.metapp.ui.navigation.arguments.DetailNavArgs
+import com.example.metapp.ui.viewmodels.DetailScreenContentType
 import com.example.metapp.ui.viewmodels.DetailScreenViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -77,30 +76,32 @@ fun DetailScreen(
             )
         }
     ) {
-        val isLoading by remember {
-            derivedStateOf {
-                state.data == null
-            }
-        }
-
         AnimatedContent(
             modifier = Modifier
                 .padding(it)
                 .fillMaxSize(),
-            targetState = isLoading,
+            targetState = state.contentType,
             label = "DetailScreenContent"
-        ) { innerIsLoading ->
+        ) { contentType ->
             val innerModifier = Modifier.fillMaxSize()
 
-            if (innerIsLoading) {
-                DetailScreenLoadingIndicator(modifier = innerModifier)
-            } else {
-                // This will always be non null
-                state.data?.let { data ->
-                    DetailScreenInformation(
-                        modifier = innerModifier.verticalScroll(rememberScrollState()),
-                        data = data
-                    )
+            when (contentType) {
+                DetailScreenContentType.LOADING -> {
+                    DetailScreenLoadingIndicator(modifier = innerModifier)
+                }
+
+                DetailScreenContentType.ERROR -> {
+                    DetailScreenErrorState(modifier = innerModifier)
+                }
+
+                DetailScreenContentType.RESULT -> {
+                    // This should always be non null
+                    state.data?.let { data ->
+                        DetailScreenInformation(
+                            modifier = innerModifier.verticalScroll(rememberScrollState()),
+                            data = data
+                        )
+                    }
                 }
             }
         }
@@ -138,6 +139,18 @@ fun DetailScreenLoadingIndicator(
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
+    }
+}
+
+@Composable
+fun DetailScreenErrorState(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = stringResource(id = R.string.detail_screen_error_state))
     }
 }
 

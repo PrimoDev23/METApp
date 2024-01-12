@@ -29,15 +29,32 @@ class DetailScreenViewModel(
     }
 
     private suspend fun initData() {
-        val data = getDetailByIdUseCase(navArgs.id)
+        val result = getDetailByIdUseCase(navArgs.id)
 
         _state.update {
-            it.copy(data = data)
+            val data = result.getOrElse { _ ->
+                return@update it.copy(
+                    contentType = DetailScreenContentType.ERROR,
+                    data = null
+                )
+            }
+
+            return@update it.copy(
+                contentType = DetailScreenContentType.RESULT,
+                data = data
+            )
         }
     }
 
 }
 
 data class DetailScreenState(
+    val contentType: DetailScreenContentType = DetailScreenContentType.LOADING,
     val data: DetailData? = null
 )
+
+enum class DetailScreenContentType {
+    LOADING,
+    ERROR,
+    RESULT
+}

@@ -7,7 +7,7 @@ import com.example.metapp.domain.usecases.interfaces.GetDetailByIdUseCase
 class GetDetailByIdUseCaseImpl(
     private val detailRepository: DetailRepository
 ) : GetDetailByIdUseCase {
-    override suspend fun invoke(id: Int): DetailData {
+    override suspend fun invoke(id: Int): Result<DetailData> {
         return detailRepository.getDetailById(id)
     }
 }
