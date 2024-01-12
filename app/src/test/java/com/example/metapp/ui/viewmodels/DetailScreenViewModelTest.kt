@@ -3,8 +3,8 @@ package com.example.metapp.ui.viewmodels
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.example.metapp.BaseCoroutineTest
-import com.example.metapp.domain.models.DetailData
 import com.example.metapp.domain.usecases.interfaces.GetDetailByIdUseCase
+import com.example.metapp.sampleData.DetailDataSamples
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -24,14 +24,7 @@ class DetailScreenViewModelTest : BaseCoroutineTest() {
         val savedStateHandle = buildSavedStateHandle(id)
         val getDetailByIdUseCase = mockk<GetDetailByIdUseCase>()
 
-        val detailData = DetailData(
-            primaryImage = "",
-            additionalImages = emptyList(),
-            isHighlight = true,
-            title = "Mona Lisa",
-            department = "Art",
-            objectUrl = "https://www.google.com"
-        )
+        val detailData = DetailDataSamples.detailData
 
         coEvery { getDetailByIdUseCase(id) } returns detailData
 

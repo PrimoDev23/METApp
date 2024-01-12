@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.example.metapp.BaseCoroutineTest
 import com.example.metapp.domain.models.SearchResult
 import com.example.metapp.domain.usecases.interfaces.SearchUseCase
+import com.example.metapp.sampleData.SearchResultSamples
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -36,9 +37,7 @@ class SearchScreenViewModelTest : BaseCoroutineTest() {
     fun `onSearchTermChanged - has entries`() = runTest {
         val searchUseCase = mockk<SearchUseCase>()
 
-        val searchResult = SearchResult(
-            ids = listOf(0, 1, 2, 3)
-        )
+        val searchResult = SearchResultSamples.filled
 
         coEvery { searchUseCase(any()) } returns searchResult
 
@@ -70,7 +69,7 @@ class SearchScreenViewModelTest : BaseCoroutineTest() {
     fun `onSearchTermChanged - no entries`() = runTest {
         val searchUseCase = mockk<SearchUseCase>()
 
-        val searchResult = SearchResult(ids = emptyList())
+        val searchResult = SearchResultSamples.empty
 
         coEvery { searchUseCase(any()) } returns searchResult
 
@@ -102,9 +101,7 @@ class SearchScreenViewModelTest : BaseCoroutineTest() {
     fun `onSearchTermChanged - clear term`() = runTest {
         val searchUseCase = mockk<SearchUseCase>()
 
-        val searchResult = SearchResult(
-            ids = listOf(0, 1, 2, 3)
-        )
+        val searchResult = SearchResultSamples.filled
 
         coEvery { searchUseCase(any()) } returns searchResult
 
