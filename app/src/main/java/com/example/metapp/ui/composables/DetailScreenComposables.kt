@@ -33,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.SpanStyle
@@ -168,7 +169,8 @@ fun DetailScreenInformation(
             NetworkImage(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(16f / 9f),
+                    .aspectRatio(16f / 9f)
+                    .testTag("PrimaryImage"),
                 url = data.primaryImage,
                 contentDescription = null
             )
@@ -178,7 +180,8 @@ fun DetailScreenInformation(
             DetailImages(
                 modifier = Modifier
                     .height(200.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .testTag("AdditionalImages"),
                 images = data.additionalImages
             )
         }

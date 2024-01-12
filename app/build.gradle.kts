@@ -91,7 +91,8 @@ dependencies {
 
     implementation(libs.compose.lifecycle)
 
-    implementation(libs.compose.coil)
+    implementation(libs.coil.compose)
+    androidTestImplementation(libs.coil.test)
 
     testImplementation(libs.mockk)
     androidTestImplementation(libs.mockk.android)
